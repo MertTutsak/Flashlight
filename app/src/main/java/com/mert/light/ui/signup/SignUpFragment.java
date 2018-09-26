@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mert.light.R;
+import com.mert.light.R;
 import com.mert.light.ui.base.BaseFragment;
 
 public class SignUpFragment extends BaseFragment {

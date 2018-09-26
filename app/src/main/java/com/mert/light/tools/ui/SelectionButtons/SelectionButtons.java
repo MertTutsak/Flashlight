@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.mert.light.R;
+import com.mert.light.R;
 
 public class SelectionButtons {
     private Button[] buttons;

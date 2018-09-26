@@ -2,7 +2,7 @@ package com.mert.light.ui.activities;
 
 import android.os.Bundle;
 
-import com.example.mert.light.R;
+import com.mert.light.R;
 import com.mert.light.data.db.sharedpreferences.SharedPreferences;
 import com.mert.light.singletons.SingletonRealm;
 import com.mert.light.ui.base.BaseActivity;

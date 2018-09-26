@@ -4,7 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.example.mert.light.R;
+import com.mert.light.R;
 
 public class ProgressDialog extends Dialog {
 

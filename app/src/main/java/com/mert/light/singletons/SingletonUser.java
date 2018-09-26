@@ -3,7 +3,7 @@ package com.mert.light.singletons;
 import android.app.Activity;
 import android.util.Log;
 
-import com.example.mert.passwords.data.model.User;
+import com.mert.light.data.model.User;
 
 public class SingletonUser{
     private static SingletonUser ourInstance;

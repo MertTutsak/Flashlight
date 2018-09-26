@@ -7,16 +7,16 @@ import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.Required;
 
 public class User extends RealmObject {
-    @Required
+
     @PrimaryKey
     private long id;
-    @Required
+
     private String name;
-    @Required
+
     private String surname;
-    @Required
+
     private String username;
-    @Required
+
     private String password;
 
     private Date createdAt;

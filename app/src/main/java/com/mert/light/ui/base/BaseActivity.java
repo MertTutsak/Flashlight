@@ -8,7 +8,7 @@ import android.util.Log;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 
-import com.example.mert.light.R;
+import com.mert.light.R;
 import com.mert.light.data.db.sharedpreferences.SharedPreferences;
 import com.mert.light.singletons.SingletonInfo;
 import com.mert.light.singletons.SingletonRealm;
@@ -47,16 +47,16 @@ public class BaseActivity extends FragmentActivity {
         frameLayout = (FrameLayout) findViewById(R.id.base_framelayout);
 
         //SharedPreferences
-        sharedPreferences = new SharedPreferences(BaseActivity.this);
+        sharedPreferences = new SharedPreferences(this);
 
         //Realm
-        singletonRealm = singletonRealm.getInstance(BaseActivity.this);
+        singletonRealm = SingletonRealm.getInstance(this);
 
         //Info
-        singletonInfo = singletonInfo.getInstance(BaseActivity.this);
+        singletonInfo = SingletonInfo.getInstance(this);
 
         //User
-        singletonUser = singletonUser.getInstance(BaseActivity.this);
+        singletonUser = SingletonUser.getInstance();
 
         //Tam ekran yapmak için
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
