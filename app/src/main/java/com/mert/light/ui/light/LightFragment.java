@@ -1,18 +1,19 @@
 package com.mert.light.ui.light;
 
 import android.os.Bundle;
-import android.support.v4.media.session.PlaybackStateCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import com.mert.light.R;
 import com.mert.light.ui.base.BaseFragment;
 import com.mert.light.utils.gesture.GestureListener;
 import com.mert.light.utils.gesture.types.Event;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class LightFragment extends BaseFragment implements Light.View, GestureListener.event {
@@ -20,6 +21,9 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
     private Event event;
 
     private LightPresenter lightPresenter;
+
+    @BindView(R.id.imageButton)
+    ImageButton imagebutton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -34,7 +38,7 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
 
         this.lightPresenter = new LightPresenter(baseActivity);
         //GesturePresenter
-        this.event = new Event(getActivity(), this);
+        this.event = new Event(getContext(), this);
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -45,7 +49,7 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
                     //buttonLight.setBackgroundResource(R.color.blue);
                     lightPresenter.HoldOn();
                 } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (lightPresenter.STATE == -1){
+                    if (lightPresenter.STATE == -1) {
                         LightFragment.this.getView().setBackgroundResource(R.color.black);
                         //buttonLight.setBackgroundResource(R.color.white);
                         lightPresenter.TurnOff();

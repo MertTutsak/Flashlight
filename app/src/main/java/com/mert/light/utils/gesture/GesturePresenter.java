@@ -10,7 +10,7 @@ public class GesturePresenter implements GestureDetector.OnGestureListener, Gest
 
     private GestureDetectorCompat gestureDetector;
 
-    protected static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    protected static final int SWIPE_THRESHOLD_VELOCITY = 150;
 
     public GesturePresenter(Context context) {
         this.gestureDetector = new GestureDetectorCompat(context, this);
