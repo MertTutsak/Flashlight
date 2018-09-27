@@ -12,8 +12,8 @@ public interface Light {
     //Data işlemleri burada olur.
     interface Presenter<V extends View> extends MvpPresenter<V> {
         int state();
-        void On();
-        void GoOn();
-        void Off();
+        void TurnOn();
+        void HoldOn();
+        void TurnOff();
     }
 }

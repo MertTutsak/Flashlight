@@ -48,19 +48,19 @@ public class LightFragment extends BaseFragment implements Light.View {
             Log.d("LightFragment", "buttonLight actions down on touch");
             LightFragment.this.getView().setBackgroundResource(R.drawable.blub_background);
             //buttonLight.setBackgroundResource(R.color.blue);
-            lightPresenter.GoOn();
+            lightPresenter.HoldOn();
         } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
             Log.d("LightFragment", "buttonLight actions up on touch");
             if (lightPresenter.STATE == -1) {
-                lightPresenter.Off();
+                lightPresenter.TurnOff();
                 LightFragment.this.getView().setBackgroundResource(R.color.black);
                 //buttonLight.setBackgroundResource(R.color.white);
             } else if (lightPresenter.STATE == 0) {
-                lightPresenter.Off();
+                lightPresenter.TurnOff();
                 LightFragment.this.getView().setBackgroundResource(R.color.black);
                 //buttonLight.setBackgroundResource(R.color.white);
             } else if (lightPresenter.STATE == 1) {
-                lightPresenter.On();
+                lightPresenter.TurnOn();
                 LightFragment.this.getView().setBackgroundResource(R.drawable.blub_background);
                 //buttonLight.setBackgroundResource(R.color.green);
             }
@@ -75,11 +75,11 @@ public class LightFragment extends BaseFragment implements Light.View {
         if (lightPresenter.STATE != -1) {
             LightFragment.this.getView().setBackgroundResource(R.color.black);
             //buttonLight.setBackgroundResource(R.color.white);
-            lightPresenter.Off();
+            lightPresenter.TurnOff();
         } else {
             LightFragment.this.getView().setBackgroundResource(R.drawable.blub_background);
             //buttonLight.setBackgroundResource(R.color.green);
-            lightPresenter.On();
+            lightPresenter.TurnOn();
         }
         return false;
     }

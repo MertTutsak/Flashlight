@@ -15,16 +15,16 @@ import com.mert.light.ui.base.BaseFragment;
 import com.mert.light.ui.base.MvpPresenter;
 
 public class LightPresenter<V extends Light.View> implements Light.Presenter<V> {
-    public static int PRESSTATE = -1;
-    public static int ONSTATE = 1;
-    public static int OFFSTATE = 0;
+    public static int HOLDON = -1;
+    public static int TURNON = 1;
+    public static int TURNOFF = 0;
     public static int STATE;
 
     private Activity activity;
 
     public LightPresenter(Activity activity) {
         this.activity = activity;
-        STATE = OFFSTATE;
+        STATE = TURNOFF;
     }
 
     @Override
@@ -57,20 +57,20 @@ public class LightPresenter<V extends Light.View> implements Light.Presenter<V> 
     }
 
     @Override
-    public void On() {
-        setState(ONSTATE);
+    public void TurnOn() {
+        setState(TURNON);
         //setCamera(true);
     }
 
     @Override
-    public void GoOn() {
-        setState(PRESSTATE);
+    public void HoldOn() {
+        setState(HOLDON);
         //setCamera(true);
     }
 
     @Override
-    public void Off() {
-        setState(OFFSTATE);
+    public void TurnOff() {
+        setState(TURNOFF);
         //setCamera(false);
     }
 
