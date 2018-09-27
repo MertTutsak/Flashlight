@@ -1,35 +1,22 @@
 package com.mert.light.ui.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.widget.Toast;
 
-import com.mert.light.R;
-import com.mert.light.data.db.sharedpreferences.SharedPreferences;
-import com.mert.light.singletons.SingletonRealm;
 import com.mert.light.ui.base.BaseActivity;
-import com.mert.light.ui.login.LoginFragment;
+import com.mert.light.ui.light.LightFragment;
 
 public class MainActivity extends BaseActivity {
-
-    //SharedPreferences
-    private SharedPreferences sharedPreferences;
-
-    //Singleton
-    private SingletonRealm singletonRealm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        sharedPreferences = new SharedPreferences(this);
-
-        if (!sharedPreferences.isLogin()) {
-            initView(new LoginFragment());
-        } else {
-            singletonRealm = singletonRealm.getInstance(this);
-            singletonRealm.getUser(sharedPreferences.getId());
-            //initView(new ...());
-        }
-
+        initView(new LightFragment());
     }
+
 }

@@ -1,36 +1,36 @@
 package com.mert.light.ui.base;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.mert.light.R;
-import com.mert.light.data.db.sharedpreferences.SharedPreferences;
-import com.mert.light.singletons.SingletonInfo;
-import com.mert.light.singletons.SingletonRealm;
-import com.mert.light.singletons.SingletonUser;
 import com.mert.light.ui.dialogs.CloseDialog;
+import com.mert.light.ui.light.LightFragment;
 
 public class BaseActivity extends FragmentActivity {
+    private static final int CAMERA_REQUEST = 50;
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(BaseActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
+        }
+    }
 
     //Bundle
     private Bundle bundle;
-
-    //Realm
-    public SingletonRealm singletonRealm;
-
-    //User
-    public SingletonUser singletonUser;
-
-    //Info
-    public SingletonInfo singletonInfo;
-
-    //SharedPreferences
-    public SharedPreferences sharedPreferences;
 
     //FrameLayout
     private FrameLayout frameLayout;
@@ -42,21 +42,10 @@ public class BaseActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_base);
 
         //FrameLAyout
         frameLayout = (FrameLayout) findViewById(R.id.base_framelayout);
-
-        //SharedPreferences
-        sharedPreferences = new SharedPreferences(this);
-
-        //Realm
-        singletonRealm = SingletonRealm.getInstance(this);
-
-        //Info
-        singletonInfo = SingletonInfo.getInstance(this);
-
-        //User
-        singletonUser = SingletonUser.getInstance();
 
         //Tam ekran yapmak için
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -75,7 +64,7 @@ public class BaseActivity extends FragmentActivity {
             @Override
             public void run() {
                 FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.base_framelayout, fragment).commit();
+                transaction.replace(R.id.base_framelayout, fragment).commitAllowingStateLoss();
             }
         }, 50);
 
@@ -122,6 +111,20 @@ public class BaseActivity extends FragmentActivity {
 */
         } else {
             closeDialog.create();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case CAMERA_REQUEST:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    initView(new LightFragment());
+                } else {
+                    Toast.makeText(BaseActivity.this, "Permission Denied for the Camera",
+                            Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
     }
 }
