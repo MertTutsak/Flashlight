@@ -1,4 +1,4 @@
-package com.mert.light.tools;
+package com.mert.light.utils;
 
 import android.graphics.Color;
 

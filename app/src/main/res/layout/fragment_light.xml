@@ -6,15 +6,4 @@
     android:layout_height="match_parent"
     android:background="@color/black">
 
-    <Button
-        android:id="@+id/light_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:scaleType="fitXY"
-        android:background="@color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
 </android.support.constraint.ConstraintLayout>
