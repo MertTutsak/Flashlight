@@ -1,18 +1,14 @@
 package com.mert.light.ui.light;
 
 import android.app.Activity;
-import android.graphics.Camera;
-import android.graphics.Color;
-
 import android.content.Context;
+import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
+import android.os.Build;
 import android.util.Log;
-import android.view.View;
 
-import com.mert.light.R;
-import com.mert.light.ui.base.BaseFragment;
-import com.mert.light.ui.base.MvpPresenter;
+import com.mert.light.ui.base.BaseActivity;
 
 public class LightPresenter<V extends Light.View> implements Light.Presenter<V> {
     public static int HOLDON = -1;
@@ -20,11 +16,24 @@ public class LightPresenter<V extends Light.View> implements Light.Presenter<V> 
     public static int TURNOFF = 0;
     public static int STATE;
 
-    private Activity activity;
+    private boolean feature_camera_flash;
+    private CameraManager cameraManager;
 
-    public LightPresenter(Activity activity) {
-        this.activity = activity;
+
+    private Camera cam;
+    private Camera.Parameters p;
+
+    private BaseActivity baseActivity;
+
+    public LightPresenter(BaseActivity baseActivity) {
+        this.baseActivity = baseActivity;
         STATE = TURNOFF;
+
+        if (baseActivity == null) {
+            Log.d("LightPresenter", "baseActivity == null");
+        } else {
+            Log.d("LightPresenter", "baseActivity != null");
+        }
     }
 
     @Override
@@ -59,34 +68,49 @@ public class LightPresenter<V extends Light.View> implements Light.Presenter<V> 
     @Override
     public void TurnOn() {
         setState(TURNON);
-        //setCamera(true);
+        setCamera(true);
     }
 
     @Override
     public void HoldOn() {
         setState(HOLDON);
-        //setCamera(true);
+        setCamera(true);
     }
 
     @Override
     public void TurnOff() {
         setState(TURNOFF);
-        //setCamera(false);
+        setCamera(false);
     }
 
-    private void setState(int state){
+    private void setState(int state) {
         this.STATE = state;
         Log.d("LightPresenter", "setState is " + this.STATE);
     }
 
     private void setCamera(boolean enabled) {
-        CameraManager cameraManager = (CameraManager) activity.getSystemService(activity.CAMERA_SERVICE);
-        String cameraId = null; // Usually front camera is at 0 position.
-        try {
-            cameraId = cameraManager.getCameraIdList()[0];
-            cameraManager.setTorchMode(cameraId, false);
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
+        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            // your code using Camera API here - is between 1-20
+            cam = Camera.open();
+            p = cam.getParameters();
+            p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+            if (enabled) {
+                cam.setParameters(p);
+                cam.startPreview();
+            } else {
+                cam.stopPreview();
+                cam.release();
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // your code using Camera2 API here - is api 21 or higher
+            feature_camera_flash = baseActivity.getPackageManager().hasSystemFeature(baseActivity.getPackageManager().FEATURE_CAMERA_FLASH);
+            cameraManager = (CameraManager) baseActivity.getSystemService(Context.CAMERA_SERVICE);
+
+            try {
+                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], enabled);
+            } catch (CameraAccessException e) {
+                e.printStackTrace();
+            }
+        }*/
     }
 }

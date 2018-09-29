@@ -1,11 +1,13 @@
 package com.mert.light.ui.base;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.camera2.CameraAccessException;
+import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
@@ -19,15 +21,6 @@ import com.mert.light.ui.light.LightFragment;
 
 public class BaseActivity extends FragmentActivity {
     private static final int CAMERA_REQUEST = 50;
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(BaseActivity.this, new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
-        }
-    }
 
     //Bundle
     private Bundle bundle;
@@ -43,6 +36,10 @@ public class BaseActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+
+        if (this.checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            this.requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
+        }
 
         //FrameLAyout
         frameLayout = (FrameLayout) findViewById(R.id.base_framelayout);
