@@ -20,11 +20,11 @@ public class BaseFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        baseActivity = new BaseActivity();
+        baseActivity = (BaseActivity) getActivity();
 
         if (baseActivity != null) {
             Log.d("BaseFragment", "baseActivity is not null");
-        }else {
+        } else {
             Log.d("BaseFragment", "baseActivity is null");
         }
     }

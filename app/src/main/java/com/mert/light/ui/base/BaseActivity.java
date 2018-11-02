@@ -15,9 +15,18 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.mert.light.R;
 import com.mert.light.ui.dialogs.CloseDialog;
 import com.mert.light.ui.light.LightFragment;
+
+import java.util.List;
 
 public class BaseActivity extends FragmentActivity {
     private static final int CAMERA_REQUEST = 50;
@@ -31,6 +40,9 @@ public class BaseActivity extends FragmentActivity {
     /* Dialog */
     //Close
     public CloseDialog closeDialog;
+
+    private boolean feature_camera_flash;
+    private CameraManager cameraManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +64,27 @@ public class BaseActivity extends FragmentActivity {
 
         //Dialog
         closeDialog = new CloseDialog(BaseActivity.this);
+
+        Dexter.withActivity(this)
+                .withPermissions(
+                        Manifest.permission.CAMERA
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport report) {
+                for (PermissionGrantedResponse response : report.getGrantedPermissionResponses()) {
+                }
+
+                for (PermissionDeniedResponse response : report.getDeniedPermissionResponses()) {
+                    finish();
+                }
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+            }
+        }).check();
     }
 
     //Frame Layout

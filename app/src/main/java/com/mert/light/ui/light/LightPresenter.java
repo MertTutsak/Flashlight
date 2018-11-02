@@ -20,9 +20,6 @@ public class LightPresenter<V extends Light.View> implements Light.Presenter<V> 
     private CameraManager cameraManager;
 
 
-    private Camera cam;
-    private Camera.Parameters p;
-
     private BaseActivity baseActivity;
 
     public LightPresenter(BaseActivity baseActivity) {
@@ -89,28 +86,14 @@ public class LightPresenter<V extends Light.View> implements Light.Presenter<V> 
     }
 
     private void setCamera(boolean enabled) {
-        /*if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            // your code using Camera API here - is between 1-20
-            cam = Camera.open();
-            p = cam.getParameters();
-            p.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-            if (enabled) {
-                cam.setParameters(p);
-                cam.startPreview();
-            } else {
-                cam.stopPreview();
-                cam.release();
-            }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // your code using Camera2 API here - is api 21 or higher
-            feature_camera_flash = baseActivity.getPackageManager().hasSystemFeature(baseActivity.getPackageManager().FEATURE_CAMERA_FLASH);
-            cameraManager = (CameraManager) baseActivity.getSystemService(Context.CAMERA_SERVICE);
 
-            try {
-                cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], enabled);
-            } catch (CameraAccessException e) {
-                e.printStackTrace();
-            }
-        }*/
+        // your code using Camera2 API here - is api 21 or higher
+        cameraManager = (CameraManager) baseActivity.getSystemService(Context.CAMERA_SERVICE);
+
+        try {
+            cameraManager.setTorchMode(cameraManager.getCameraIdList()[0], enabled);
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
