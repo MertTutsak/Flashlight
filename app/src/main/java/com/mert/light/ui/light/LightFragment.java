@@ -34,8 +34,8 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
     //Circular Reveal
     CircularReveal circularReveal;
 
-    @BindView(R.id.circular_layout_info)
-    LinearLayout viewCircularReveal;
+    @BindView(R.id.linearLayout_info_light)
+    LinearLayout linearLayoutInfo;
 
     @BindView(R.id.image_button)
     ImageButton imageButton;
@@ -60,29 +60,6 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
         //GesturePresenter
         this.event = new Event(getContext(), this);
 
-        //Circular Reveal
-        this.circularReveal = new CircularReveal(viewCircularReveal);
-
-
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                    Log.d("LightFragment", "buttonLight actions down on touch");
-                    LightFragment.this.getView().setBackgroundResource(R.drawable.blub_background);
-                    //buttonLight.setBackgroundResource(R.color.blue);
-                    lightPresenter.HoldOn();
-                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                    if (lightPresenter.STATE == -1) {
-                        LightFragment.this.getView().setBackgroundResource(R.color.black);
-                        //buttonLight.setBackgroundResource(R.color.white);
-                        lightPresenter.TurnOff();
-                    }
-                }
-
-                return event.getGestureDetector().onTouchEvent(motionEvent);
-            }
-        });
         return view;
     }
 
@@ -94,7 +71,7 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
         int startRadius = 0;
         int endRadius = 0;
 
-        if (viewCircularReveal.getVisibility() == View.GONE) {
+        if (linearLayoutInfo.getVisibility() == View.GONE) {
             startRadius = 0;
             endRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
         } else {
