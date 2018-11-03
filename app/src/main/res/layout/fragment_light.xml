@@ -5,7 +5,7 @@
     android:id="@+id/light_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blub_background">
+    android:background="@color/black">
 
     <LinearLayout
         android:id="@+id/linearLayout_info_light"

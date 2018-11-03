@@ -37,7 +37,6 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
     @BindView(R.id.linearLayout_info_light)
     LinearLayout linearLayoutInfo;
 
-
     //Layout
     View view;
 
@@ -54,9 +53,6 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
 
         //Presenter
         this.lightPresenter = new LightPresenter(baseActivity);
-
-        //GesturePresenter
-        this.event = new Event(getContext(), this);
 
         return view;
     }
