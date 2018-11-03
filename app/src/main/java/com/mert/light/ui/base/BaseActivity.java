@@ -1,9 +1,7 @@
 package com.mert.light.ui.base;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +13,10 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -37,6 +39,10 @@ public class BaseActivity extends FragmentActivity {
     //FrameLayout
     private FrameLayout frameLayout;
 
+    //Ad Manager
+    private AdView adViewTop;
+    private AdView adViewBottom;
+
     /* Dialog */
     //Close
     public CloseDialog closeDialog;
@@ -54,16 +60,27 @@ public class BaseActivity extends FragmentActivity {
         }
 
         //FrameLAyout
-        frameLayout = (FrameLayout) findViewById(R.id.base_framelayout);
+        this.frameLayout = (FrameLayout) findViewById(R.id.base_framelayout);
 
         //Tam ekran yapmak için
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         //Bundle
-        bundle = new Bundle();
+        this.bundle = new Bundle();
 
         //Dialog
-        closeDialog = new CloseDialog(BaseActivity.this);
+        this.closeDialog = new CloseDialog(BaseActivity.this);
+
+        //AdMob
+        MobileAds.initialize(this, getResources().getString(R.string.app_admob_id));
+
+        adViewTop = findViewById(R.id.adView_top);
+        adViewBottom = findViewById(R.id.adView_bottom);
+
+        AdRequest adRequest = new AdRequest.Builder().addTestDevice("77379DF6B7DB9E34CC89112EB279D3F3").build();
+
+        adViewTop.loadAd(adRequest);
+        adViewBottom.loadAd(adRequest);
 
         Dexter.withActivity(this)
                 .withPermissions(
