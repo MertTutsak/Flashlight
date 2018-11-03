@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
@@ -39,9 +40,8 @@ public class BaseActivity extends FragmentActivity {
     //FrameLayout
     private FrameLayout frameLayout;
 
-    //Ad Manager
-    private AdView adViewTop;
-    private AdView adViewBottom;
+    //RelativeLayout
+    public RelativeLayout relativeLayout;
 
     /* Dialog */
     //Close
@@ -59,6 +59,9 @@ public class BaseActivity extends FragmentActivity {
             this.requestPermissions(new String[]{Manifest.permission.CAMERA}, CAMERA_REQUEST);
         }
 
+        //Relative Layout
+        this.relativeLayout = findViewById(R.id.layout_base);
+
         //FrameLAyout
         this.frameLayout = (FrameLayout) findViewById(R.id.base_framelayout);
 
@@ -70,17 +73,6 @@ public class BaseActivity extends FragmentActivity {
 
         //Dialog
         this.closeDialog = new CloseDialog(BaseActivity.this);
-
-        //AdMob
-        MobileAds.initialize(this, getResources().getString(R.string.app_admob_id));
-
-        adViewTop = findViewById(R.id.adView_top);
-        adViewBottom = findViewById(R.id.adView_bottom);
-
-        AdRequest adRequest = new AdRequest.Builder().addTestDevice("77379DF6B7DB9E34CC89112EB279D3F3").build();
-
-        adViewTop.loadAd(adRequest);
-        adViewBottom.loadAd(adRequest);
 
         Dexter.withActivity(this)
                 .withPermissions(

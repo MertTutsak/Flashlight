@@ -19,61 +19,88 @@
         <TextView
             android:layout_width="185dp"
             android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:padding="4dp"
             android:text="TURN ON"
-            android:padding="6dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:background="@color/red"/>
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="6dp"
             android:scaleType="fitXY"
             android:src="@drawable/arrow_up" />
 
         <TextView
             android:layout_width="185dp"
             android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:padding="4dp"
             android:text="HOLD ON"
-            android:padding="6dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:background="@color/red" />
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
+            android:padding="6dp"
             android:scaleType="fitXY"
             android:src="@drawable/arrow_down" />
 
         <TextView
             android:layout_width="185dp"
             android:layout_height="wrap_content"
+            android:background="@color/red"
+            android:padding="4dp"
             android:text="TURN OFF"
-            android:padding="6dp"
             android:textAlignment="center"
             android:textColor="@color/white"
-            android:textSize="36sp"
-            android:textStyle="bold"
-            android:background="@color/red" />
+            android:textSize="32sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <ImageButton
-        android:background="@drawable/round_button"
         android:id="@+id/image_button"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:background="@drawable/round_button"
         android:src="@drawable/warning_red"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/adView_bottom"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id_top"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintTop_toTopOf="parent"></com.google.android.gms.ads.AdView>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/banner_ad_unit_id_top"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"></com.google.android.gms.ads.AdView>
 
 </android.support.constraint.ConstraintLayout>

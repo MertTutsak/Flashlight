@@ -14,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.mert.light.R;
 import com.mert.light.ui.base.BaseFragment;
 import com.mert.light.utils.circularreveal.CircularReveal;
@@ -43,6 +46,10 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
     //Layout
     View view;
 
+    //Ad Manager
+    private AdView adViewTop;
+    private AdView adViewBottom;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_light, container, false);
@@ -63,6 +70,16 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
         //Circular Reveal
         this.circularReveal = new CircularReveal(viewCircularReveal);
 
+        //AdMob
+        MobileAds.initialize(baseActivity, getResources().getString(R.string.app_admob_id));
+
+        adViewTop = view.findViewById(R.id.adView_top);
+        adViewBottom = view.findViewById(R.id.adView_bottom);
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+
+        adViewTop.loadAd(adRequest);
+        adViewBottom.loadAd(adRequest);
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
