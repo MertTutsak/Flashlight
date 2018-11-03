@@ -34,8 +34,11 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
     //Circular Reveal
     CircularReveal circularReveal;
 
-    @BindView(R.id.linearLayout_info_light)
-    LinearLayout linearLayoutInfo;
+    @BindView(R.id.circular_layout_info)
+    LinearLayout viewCircularReveal;
+
+    @BindView(R.id.image_button)
+    ImageButton imageButton;
 
     //Layout
     View view;
@@ -54,7 +57,84 @@ public class LightFragment extends BaseFragment implements Light.View, GestureLi
         //Presenter
         this.lightPresenter = new LightPresenter(baseActivity);
 
+        //GesturePresenter
+        this.event = new Event(getContext(), this);
+
+        //Circular Reveal
+        this.circularReveal = new CircularReveal(viewCircularReveal);
+
+
+        view.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                    Log.d("LightFragment", "buttonLight actions down on touch");
+                    LightFragment.this.getView().setBackgroundResource(R.drawable.blub_background);
+                    //buttonLight.setBackgroundResource(R.color.blue);
+                    lightPresenter.HoldOn();
+                } else if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (lightPresenter.STATE == -1) {
+                        LightFragment.this.getView().setBackgroundResource(R.color.black);
+                        //buttonLight.setBackgroundResource(R.color.white);
+                        lightPresenter.TurnOff();
+                    }
+                }
+
+                return event.getGestureDetector().onTouchEvent(motionEvent);
+            }
+        });
         return view;
+    }
+
+    @OnClick(R.id.image_button)
+    void OnClick(View view) {
+        int x = (view.getRight() + view.getLeft()) / 2;
+        int y = (view.getTop() + view.getBottom()) / 2;
+
+        int startRadius = 0;
+        int endRadius = 0;
+
+        if (viewCircularReveal.getVisibility() == View.GONE) {
+            startRadius = 0;
+            endRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
+        } else {
+            startRadius = (int) Math.hypot(view.getWidth(), view.getHeight());
+            endRadius = 0;
+        }
+
+        circularReveal.setPosition(x, y);
+        circularReveal.setRadius(startRadius, endRadius);
+
+        circularReveal.create();
+
+        if (circularReveal.isCreate()) {
+            circularReveal.getAnimator().addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animator) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    if (circularReveal.isOpen()) {
+                        imageButton.setImageResource(R.drawable.warning_white);
+                    } else {
+                        imageButton.setImageResource(R.drawable.warning_red);
+                    }
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animator) {
+
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animator) {
+
+                }
+            });
+            circularReveal.start();
+        }
+
     }
 
     @Override
